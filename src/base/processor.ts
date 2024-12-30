@@ -36,18 +36,10 @@ export const processor = new EvmBatchProcessor()
       // Required fields are automatically included: logIndex, transactionIndex
       transactionHash: true
     },
-    // trace: {
-    //   createResultCode: true, // for checking ERC721 compliance
-    //   createResultAddress: true,
-    // },
   })
   .setBlockRange({
     from: 20858604, // 2024-10-09 start date of AAVE Base deployment
   })
-  // .addTrace({
-  //   type: ["create"],
-  //   transaction: true,
-  // })
   .addLog({
     address: [
       BASEV3_POOL_CONTRACT, 
