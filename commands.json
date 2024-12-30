@@ -10,9 +10,17 @@
         "deps": ["clean"],
         "cmd": ["tsc"]
       },
+      "typegen:ethereum": {
+        "description": "Generate data access classes for Ethereum ABI files",
+        "cmd": ["squid-evm-typegen", "./src/ethereum/abi", {"glob": "./src/ethereum/abi/*.json"}, "--multicall"]
+      },
+      "typegen:base": {
+        "description": "Generate data access classes for Base ABI files",
+        "cmd": ["squid-evm-typegen", "./src/base/abi", {"glob": "./src/base/abi/*.json"}, "--multicall"]
+      },
       "typegen": {
-        "description": "Generate data access classes for an ABI file(s) in the ./abi folder",
-        "cmd": ["squid-evm-typegen", "./src/abi", {"glob": "./abi/*.json"}, "--multicall"]
+        "description": "Generate data access classes for all ABI files",
+        "deps": ["typegen:ethereum", "typegen:base"]
       },
       "process:ethereum": {
         "description": "Process Ethereum chain events",

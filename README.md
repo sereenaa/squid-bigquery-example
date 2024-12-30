@@ -25,6 +25,8 @@ Visit [the documentation page](https://docs.subsquid.io/store/bigquery-store/) f
 To generate the types:
 ```bash
 npx squid-evm-typegen ./src/base/abi ./src/base/abi/*.json --multicall
+or
+sqd typegen:base
 ```
 TODO: add this to commands.json
 
@@ -32,3 +34,12 @@ To run the squid for base:
 ```bash
 sqd process:base
 ```
+
+
+### Development flow
+1. Get the contract ABI 
+2. Copy and paste the ABI into the `abi` folder
+3. Run `sqd typegen:base` to generate the types
+4. Add the relevant filters to the processor.ts file
+5. Create a new table in main.ts for the event
+6. Run `sqd process:base` to start the squid 

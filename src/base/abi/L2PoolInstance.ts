@@ -11,8 +11,7 @@ export const events = {
     MintUnbacked: event("0xf25af37b3d3ec226063dc9bdc103ece7eb110a50f340fe854bb7bc1b0676d7d0", "MintUnbacked(address,address,address,uint256,uint16)", {"reserve": indexed(p.address), "user": p.address, "onBehalfOf": indexed(p.address), "amount": p.uint256, "referralCode": indexed(p.uint16)}),
     MintedToTreasury: event("0xbfa21aa5d5f9a1f0120a95e7c0749f389863cbdbfff531aa7339077a5bc919de", "MintedToTreasury(address,uint256)", {"reserve": indexed(p.address), "amountMinted": p.uint256}),
     Repay: event("0xa534c8dbe71f871f9f3530e97a74601fea17b426cae02e1c5aee42c96c784051", "Repay(address,address,address,uint256,bool)", {"reserve": indexed(p.address), "user": indexed(p.address), "repayer": indexed(p.address), "amount": p.uint256, "useATokens": p.bool}),
-    'ReserveDataUpdated(address indexed,uint256,uint256,uint256,uint256,uint256)': event("0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a", "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)", {"reserve": indexed(p.address), "liquidityRate": p.uint256, "stableBorrowRate": p.uint256, "variableBorrowRate": p.uint256, "liquidityIndex": p.uint256, "variableBorrowIndex": p.uint256}),
-    // 'ReserveDataUpdated(address indexed,uint256,uint256,uint256,uint256,uint256)': event("0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a", "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)", {"reserve": indexed(p.address), "liquidityRate": p.uint256, "stableBorrowRate": p.uint256, "variableBorrowRate": p.uint256, "liquidityIndex": p.uint256, "variableBorrowIndex": p.uint256}),
+    ReserveDataUpdated: event("0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a", "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)", {"reserve": indexed(p.address), "liquidityRate": p.uint256, "stableBorrowRate": p.uint256, "variableBorrowRate": p.uint256, "liquidityIndex": p.uint256, "variableBorrowIndex": p.uint256}),
     ReserveUsedAsCollateralDisabled: event("0x44c58d81365b66dd4b1a7f36c25aa97b8c71c361ee4937adc1a00000227db5dd", "ReserveUsedAsCollateralDisabled(address,address)", {"reserve": indexed(p.address), "user": indexed(p.address)}),
     ReserveUsedAsCollateralEnabled: event("0x00058a56ea94653cdf4f152d227ace22d4c00ad99e2a43f58cb7d9e3feb295f2", "ReserveUsedAsCollateralEnabled(address,address)", {"reserve": indexed(p.address), "user": indexed(p.address)}),
     Supply: event("0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61", "Supply(address,address,address,uint256,uint16)", {"reserve": indexed(p.address), "user": p.address, "onBehalfOf": indexed(p.address), "amount": p.uint256, "referralCode": indexed(p.uint16)}),
@@ -227,8 +226,7 @@ export type LiquidationCallEventArgs = EParams<typeof events.LiquidationCall>
 export type MintUnbackedEventArgs = EParams<typeof events.MintUnbacked>
 export type MintedToTreasuryEventArgs = EParams<typeof events.MintedToTreasury>
 export type RepayEventArgs = EParams<typeof events.Repay>
-export type ReserveDataUpdatedEventArgs_0 = EParams<typeof events['ReserveDataUpdated(address indexed,uint256,uint256,uint256,uint256,uint256)']>
-export type ReserveDataUpdatedEventArgs_1 = EParams<typeof events['ReserveDataUpdated(address indexed,uint256,uint256,uint256,uint256,uint256)']>
+export type ReserveDataUpdatedEventArgs = EParams<typeof events.ReserveDataUpdated>
 export type ReserveUsedAsCollateralDisabledEventArgs = EParams<typeof events.ReserveUsedAsCollateralDisabled>
 export type ReserveUsedAsCollateralEnabledEventArgs = EParams<typeof events.ReserveUsedAsCollateralEnabled>
 export type SupplyEventArgs = EParams<typeof events.Supply>
