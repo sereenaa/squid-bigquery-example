@@ -19,3 +19,16 @@ Make sure to use an ID of an existing dataset for `GOOGLE_DATASET_ID`!
 If you visit [the console](https://console.cloud.google.com/bigquery) now you should see that the two new tables `status` and `transfers` have been created and are being populated within your dataset.
 
 Visit [the documentation page](https://docs.subsquid.io/store/bigquery-store/) for more details on using squids with BigQuery.
+
+
+# Sez's notes
+To generate the types:
+```bash
+npx squid-evm-typegen ./src/base/abi ./src/base/abi/*.json --multicall
+```
+TODO: add this to commands.json
+
+To run the squid for base: 
+```bash
+sqd process:base
+```

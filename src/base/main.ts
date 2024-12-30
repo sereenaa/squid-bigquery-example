@@ -8,6 +8,8 @@ import {
 	Database
 } from '@subsquid/bigquery-store'
 import {createLogger} from '@subsquid/logger'
+import {EventColumns} from '../utils/EventColumns'
+import {EventLogger} from '../utils/EventLogger'
 import * as L2PoolInstance from "./abi/L2PoolInstance";
 import * as PoolConfiguratorInstance from "./abi/PoolConfiguratorInstance";
 import {
@@ -37,36 +39,10 @@ const db = new Database({
 	dataset: `${projectId}.${datasetId}`,
 	tables: {
 		MintedToTreasuryTable: new Table(
-			'basev3_minted_to_treasury',
-			{
-        block: Column(Types.Numeric(38,9)),
-        blockTimestamp: Column(Types.Numeric(38,9)),
-        txHash: Column(Types.String()),
-        txIndex: Column(Types.Numeric(38,9)),
-        logIndex: Column(Types.Numeric(38,9)),
-        contractAddress: Column(Types.String()),
-        topic0: Column(Types.String(), {nullable: true}),
-        topic1: Column(Types.String(), {nullable: true}),
-        topic2: Column(Types.String(), {nullable: true}),
-        topic3: Column(Types.String(), {nullable: true}),
-        data: Column(Types.String(), {nullable: true})
-      }
+			'basev3_minted_to_treasury', EventColumns
 		),
     ReserveInitializedTable: new Table(
-      'basev3_reserve_initialized',
-      {
-        block: Column(Types.Numeric(38,9)),
-        blockTimestamp: Column(Types.Numeric(38,9)),
-        txHash: Column(Types.String()),
-        txIndex: Column(Types.Numeric(38,9)),
-        logIndex: Column(Types.Numeric(38,9)),
-        contractAddress: Column(Types.String()),
-        topic0: Column(Types.String(), {nullable: true}),
-        topic1: Column(Types.String(), {nullable: true}),
-        topic2: Column(Types.String(), {nullable: true}),
-        topic3: Column(Types.String(), {nullable: true}),
-        data: Column(Types.String(), {nullable: true})
-      }
+      'basev3_reserve_initialized', EventColumns
     )
 	}
 })
@@ -76,34 +52,14 @@ processor.run(db, async (ctx) => {
 		for (let log of block.logs) {
 			if (log.address === BASEV3_POOL_CONTRACT && log.topics[0] === L2PoolInstance.events.MintedToTreasury.topic) {
         // console.log(log)
-        ctx.store.MintedToTreasuryTable.insert({
-          block: block.header.height,
-          blockTimestamp: block.header.timestamp / 1000,
-          txHash: log.transactionHash,
-          txIndex: log.transactionIndex,
-          logIndex: log.logIndex,
-          contractAddress: log.address,
-          topic0: log.topics[0] || null,
-          topic1: log.topics[1] || null,
-          topic2: log.topics[2] || null,
-          topic3: log.topics[3] || null,
-          data: log.data || null,
-        })
+        ctx.store.MintedToTreasuryTable.insert(
+          EventLogger.createLogEntry(block, log)
+        )
       }
       else if (log.address === BASEV3_POOL_CONFIGURATOR_CONTRACT && log.topics[0] === PoolConfiguratorInstance.events.ReserveInitialized.topic) {
-        ctx.store.ReserveInitializedTable.insert({
-          block: block.header.height,
-          blockTimestamp: block.header.timestamp / 1000,
-          txHash: log.transactionHash,
-          txIndex: log.transactionIndex,
-          logIndex: log.logIndex,
-          contractAddress: log.address,
-          topic0: log.topics[0] || null,
-          topic1: log.topics[1] || null,
-          topic2: log.topics[2] || null,
-          topic3: log.topics[3] || null,
-          data: log.data || null,
-        })
+        ctx.store.ReserveInitializedTable.insert(
+          EventLogger.createLogEntry(block, log)
+        )
       }
     }
   }
