@@ -1,0 +1,25 @@
+manifestVersion: subsquid.io/v0.1
+name: squid-bigquery-example
+version: 1
+description: A squid that indexes events from Ethereum and Base chains
+build: 
+deploy:
+  processor:
+    - name: ethereum
+      cmd:
+        - node
+        - lib/ethereum/main
+      env:
+        GAC_JSON_FILE: ${{ secrets.GAC_JSON_FILE }}
+        GOOGLE_APPLICATION_CREDENTIALS: google_application_credentials.json
+        GOOGLE_PROJECT_ID: tokenlogic-data-dev
+        GOOGLE_DATASET_ID: sqd_indexer
+    - name: base
+      cmd:
+        - node
+        - lib/base/main
+      env:
+        GAC_JSON_FILE: ${{ secrets.GAC_JSON_FILE }}
+        GOOGLE_APPLICATION_CREDENTIALS: google_application_credentials.json
+        GOOGLE_PROJECT_ID: tokenlogic-data-dev
+        GOOGLE_DATASET_ID: sqd_indexer
